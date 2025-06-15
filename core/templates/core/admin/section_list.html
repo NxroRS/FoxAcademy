@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secciones – Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<div class="flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-blue-900 text-white flex flex-col justify-between">
+    <div class="p-6">
+      <h1 class="text-2xl font-bold mb-8">FoxGuard<br>Admin</h1>
+        <nav class="space-y-4 text-base">
+          <a href="{% url 'admin_panel' %}" class="block text-white font-semibold">📊 Dashboard</a>
+          <a href="{% url 'admin_users' %}" class="block hover:text-blue-200">👥 Usuarios</a>
+          <a href="{% url 'admin_levels' %}" class="block hover:text-blue-200">📘 Niveles</a>
+          <a href="#" class="block hover:text-blue-200">🧠 Evaluaciones</a>
+          <a href="{% url 'admin_evaluation_results' %}" class="block hover:text-blue-200">📄 Resultados</a>
+        </nav>
+    </div>
+    <footer class="p-6 text-sm text-blue-300">TechFox © 2025</footer>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 p-10 overflow-auto">
+    <section class="bg-white rounded-xl shadow p-6">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h2 class="text-2xl font-semibold text-blue-700">📚 Secciones de {{ nivel.titulo }}</h2>
+          <p class="text-sm text-gray-600">Administra las secciones de este nivel.</p>
+        </div>
+            <a href="{% url 'admin_section_create' nivel.id %}" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm">➕ Nueva sección</a>
+      </div>
+
+      <div class="space-y-4">
+        {% for s in secciones %}
+        <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="font-semibold text-blue-800">{{ s.titulo }}</h3>
+              <p class="text-sm text-gray-600">{{ s.descripcion|truncatechars:100 }}</p>
+            </div>
+            <div class="flex space-x-2">
+              <a href="#" class="px-3 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">✏️ Editar</a>
+              <a href="#" class="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700" onclick="return confirm('¿Eliminar sección?')">🗑️ Eliminar</a>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <p class="text-gray-500">No hay secciones en este nivel todavía.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+</div>
+
+</body>
+</html>

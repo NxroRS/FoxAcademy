@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Iniciar sesión – FoxGuardAcademy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f8f9fa] min-h-screen flex items-center justify-center px-4">
+
+  <div class="bg-white shadow-xl rounded-xl p-8 w-full max-w-md">
+    <h2 class="text-2xl font-bold text-blue-600 text-center mb-6">Iniciar sesión</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="mb-4 text-sm text-red-600 text-center">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST" class="space-y-4">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <div>
+        {{ form.username.label_tag }}
+        {{ form.username }}
+      </div>
+      <div>
+        {{ form.password.label_tag }}
+        {{ form.password }}
+      </div>
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition font-semibold">
+        Entrar
+      </button>
+    </form>
+
+    <p class="text-center mt-4 text-sm text-gray-600">
+      ¿No tienes cuenta?
+      <a href="{% url 'register' %}" class="text-blue-600 hover:underline">Regístrate</a>
+    </p>
+  </div>
+
+</body>
+</html>

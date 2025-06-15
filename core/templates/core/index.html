@@ -1,10 +1,48 @@
-<!-- core/templates/core/index.html -->
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Página de inicio</title>
+  <meta charset="UTF-8">
+  <title>FoxGuardAcademy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>¡Hola desde Django!</h1>
+<body class="bg-[#f8f9fa] text-gray-800 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="w-full flex justify-between items-center px-8 py-4 bg-white shadow">
+    <h1 class="text-2xl font-bold text-blue-600">FoxGuardAcademy</h1>
+    <div class="space-x-4">
+      <a href="{% url 'login' %}" class="text-blue-600 font-semibold hover:underline">Iniciar sesión</a>
+      <a href="{% url 'register' %}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Regístrate</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main class="flex-1 flex flex-col-reverse md:flex-row items-center justify-between px-8 py-16 max-w-6xl mx-auto gap-12">
+    <!-- Texto -->
+    <div class="w-full md:w-1/2 space-y-6">
+      <h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+        Aprende ciberseguridad <span class="text-blue-600">jugando</span>   
+      </h2>
+      <p class="text-lg text-gray-600">
+        Cursos interactivos, desafíos diarios y certificados. Capacita a tu equipo con nuestra plataforma gamificada.
+      </p>
+      <div class="space-x-4">
+        <a href="{% url 'register' %}" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-semibold">Comienza gratis</a>
+        <a href="{% url 'login' %}" class="px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-300 font-semibold">Ya tengo cuenta</a>
+      </div>
+    </div>
+
+    <!-- Ilustración -->
+    <div class="w-full md:w-1/2">
+      <img src="https://cdn.dribbble.com/users/2046015/screenshots/14424344/media/babb74fd9c708aa9db4e26b01c6e8c99.png?compress=1&resize=1000x750" alt="Ilustración educativa" class="rounded-xl shadow-lg w-full">
+    </div>
+  </main>
+
+  <!-- Footer simple -->
+  <footer class="text-center text-sm text-gray-500 py-4">
+    © 2025 FoxGuardAcademy. Todos los derechos reservados.
+  </footer>
+
 </body>
 </html>

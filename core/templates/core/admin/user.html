@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Usuarios – FoxGuardAdmin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<div class="flex h-screen overflow-hidden">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-blue-900 text-white flex flex-col justify-between">
+    <div class="p-6">
+      <h1 class="text-2xl font-bold mb-8 leading-tight">FoxGuard<br>Admin</h1>
+        <nav class="space-y-4 text-base">
+          <a href="{% url 'admin_panel' %}" class="block text-white font-semibold">📊 Dashboard</a>
+          <a href="{% url 'admin_users' %}" class="block hover:text-blue-200">👥 Usuarios</a>
+          <a href="{% url 'admin_levels' %}" class="block hover:text-blue-200">📘 Niveles</a>
+          <a href="#" class="block hover:text-blue-200">🧠 Evaluaciones</a>
+          <a href="{% url 'admin_evaluation_results' %}" class="block hover:text-blue-200">📄 Resultados</a>
+        </nav>
+    </div>
+    <footer class="p-6 text-sm text-blue-300">
+      TechFox © 2025
+    </footer>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex-1 p-10 overflow-auto space-y-6">
+    <section class="bg-white rounded-xl shadow p-6">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h2 class="text-2xl font-semibold text-blue-700">👥 Gestión de Usuarios</h2>
+          <p class="text-gray-600 text-sm">Lista de usuarios con opciones de administración.</p>
+        </div>
+        <a href="{% url 'admin_user_create' %}" class="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 text-sm font-medium">
+          ➕ Crear nuevo usuario
+        </a>
+      </div>
+
+      <div class="overflow-auto border border-gray-200 rounded-lg">
+        <table class="w-full divide-y divide-gray-200 text-sm">
+          <thead class="bg-blue-100 text-blue-800">
+            <tr>
+              <th class="px-4 py-2 text-left">#</th>
+              <th class="px-4 py-2 text-left">Usuario</th>
+              <th class="px-4 py-2 text-left">Correo</th>
+              <th class="px-4 py-2 text-left">Estado</th>
+              <th class="px-4 py-2 text-left">Último login</th>
+              <th class="px-4 py-2 text-left">Acciones</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            {% for u in usuarios %}
+            <tr>
+              <td class="px-4 py-2">{{ forloop.counter }}</td>
+              <td class="px-4 py-2 font-medium">{{ u.username }}</td>
+              <td class="px-4 py-2">{{ u.email }}</td>
+              <td class="px-4 py-2">
+                {% if u.is_active %}
+                  <span class="text-green-600 font-semibold">Activo</span>
+                {% else %}
+                  <span class="text-red-600 font-semibold">Inactivo</span>
+                {% endif %}
+              </td>
+              <td class="px-4 py-2">{{ u.last_login|default:"Nunca" }}</td>
+              <td class="px-4 py-2 space-x-2">
+                <a href="{% url 'admin_user_edit' u.id %}" class="inline-block px-2 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700">✏️ Editar</a>
+                {% if u.is_active %}
+                  <a href="{% url 'admin_user_toggle' u.id %}" class="inline-block px-2 py-1 text-xs bg-yellow-500 text-white rounded hover:bg-yellow-600">🚫 Desactivar</a>
+                {% else %}
+                  <a href="{% url 'admin_user_toggle' u.id %}" class="inline-block px-2 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700">✅ Activar</a>
+                {% endif %}
+                <a href="{% url 'admin_user_delete' u.id %}" class="inline-block px-2 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700" onclick="return confirm('¿Estás seguro de eliminar este usuario?')">🗑️ Eliminar</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="6" class="text-center py-6 text-gray-400">No hay usuarios registrados.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Right Panel -->
+  <aside class="w-80 bg-white border-l border-gray-200 p-6 flex flex-col gap-6">
+    <div class="flex items-center gap-4">
+      <img src="https://source.unsplash.com/100x100/?admin,tech" alt="Admin" class="w-16 h-16 rounded-full object-cover">
+      <div>
+        <p class="font-semibold">{{ request.user.username }}</p>
+        <p class="text-sm text-gray-500">Administrador</p>
+      </div>
+    </div>
+
+    <div class="bg-blue-50 p-4 border-l-4 border-blue-500 rounded">
+      <h5 class="font-semibold text-blue-700">👥 Gestión de Usuarios</h5>
+      <p class="text-sm text-gray-600 mt-1">Puedes activar, desactivar o eliminar usuarios desde aquí.</p>
+    </div>
+  </aside>
+
+</div>
+</body>
+</html>

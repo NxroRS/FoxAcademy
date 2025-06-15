@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nuevo Nivel – Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <div class="flex h-screen overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-blue-900 text-white flex flex-col justify-between">
+      <div class="p-6">
+        <h1 class="text-2xl font-bold mb-8">FoxGuard<br>Admin</h1>
+        <nav class="space-y-4 text-base">
+          <a href="{% url 'admin_panel' %}" class="block hover:text-blue-200">📊 Dashboard</a>
+          <a href="{% url 'admin_users' %}" class="block hover:text-blue-200">👥 Usuarios</a>
+          <a href="{% url 'admin_levels' %}" class="block text-white font-semibold">📘 Niveles</a>
+        </nav>
+      </div>
+      <footer class="p-6 text-sm text-blue-300">TechFox © 2025</footer>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 p-10 overflow-auto">
+      <section class="bg-white rounded-xl shadow p-6 max-w-xl mx-auto">
+        <h2 class="text-2xl font-semibold text-blue-700 mb-6">➕ Crear nuevo nivel</h2>
+
+        <form method="POST" class="space-y-4">
+          {% csrf_token %}
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Título del nivel</label>
+            {{ form.titulo }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Descripción</label>
+            {{ form.descripcion }}
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Orden de aparición</label>
+            {{ form.orden }}
+          </div>
+          <div class="pt-4">
+            <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Guardar nivel</button>
+            <a href="{% url 'admin_levels' %}" class="ml-4 text-blue-600 hover:underline">← Cancelar</a>
+          </div>
+        </form>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
